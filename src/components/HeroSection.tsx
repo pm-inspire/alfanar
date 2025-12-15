@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import heroBg from '@/assets/hero-bg.jpg';
+import cafe1 from '@/assets/cafe-1.jpg';
 
 const HeroSection = () => {
   const scrollToMenu = () => {
@@ -19,14 +19,14 @@ const HeroSection = () => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <img
-          src={heroBg}
+          src={cafe1}
           alt="أجواء مقهى الفنار"
           className="w-full h-full object-cover"
         />
         <div 
           className="absolute inset-0"
           style={{
-            background: 'linear-gradient(180deg, hsla(25, 30%, 10%, 0.5) 0%, hsla(25, 30%, 15%, 0.7) 100%)',
+            background: 'linear-gradient(180deg, hsla(355, 52%, 10%, 0.6) 0%, hsla(355, 52%, 15%, 0.8) 100%)',
           }}
         />
       </div>
