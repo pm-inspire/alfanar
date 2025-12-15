@@ -6,44 +6,44 @@
 
 @layer base {
   :root {
-    /* Brand Colors - Rich Browns, Gold, Cream */
-    --background: 40 20% 96%;
-    --foreground: 25 30% 15%;
+    /* Brand Colors - Burgundy, Gold, Cream */
+    --background: 40 30% 96%;
+    --foreground: 351 50% 20%;
 
     --card: 40 25% 94%;
-    --card-foreground: 25 30% 15%;
+    --card-foreground: 351 50% 20%;
 
     --popover: 40 25% 98%;
-    --popover-foreground: 25 30% 15%;
+    --popover-foreground: 351 50% 20%;
 
-    /* Primary - Rich Brown */
-    --primary: 25 27% 29%;
+    /* Primary - Burgundy #79272F */
+    --primary: 355 52% 31%;
     --primary-foreground: 40 30% 96%;
 
-    /* Secondary - Light Brown/Beige */
-    --secondary: 30 20% 85%;
-    --secondary-foreground: 25 30% 20%;
+    /* Secondary - Light Cream/Beige */
+    --secondary: 40 30% 90%;
+    --secondary-foreground: 355 52% 25%;
 
-    /* Gold Accent */
+    /* Gold Accent #D4AF37 */
     --accent: 43 70% 52%;
-    --accent-foreground: 25 30% 15%;
+    --accent-foreground: 351 50% 15%;
 
-    --muted: 30 15% 88%;
-    --muted-foreground: 25 15% 45%;
+    --muted: 40 20% 88%;
+    --muted-foreground: 351 25% 45%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 30 20% 82%;
-    --input: 30 20% 85%;
+    --border: 40 20% 82%;
+    --input: 40 20% 85%;
     --ring: 43 70% 52%;
 
     --radius: 0.75rem;
 
     /* Extended Palette */
-    --coffee-dark: 25 30% 22%;
-    --coffee-medium: 25 27% 35%;
-    --coffee-light: 30 25% 45%;
+    --coffee-dark: 355 52% 20%;
+    --coffee-medium: 355 45% 31%;
+    --coffee-light: 355 35% 45%;
     --gold: 43 70% 52%;
     --gold-light: 43 60% 65%;
     --cream: 40 30% 96%;
@@ -51,58 +51,58 @@
 
     /* Gradients */
     --gradient-gold: linear-gradient(135deg, hsl(43, 70%, 52%) 0%, hsl(35, 65%, 45%) 100%);
-    --gradient-brown: linear-gradient(135deg, hsl(25, 30%, 22%) 0%, hsl(25, 27%, 35%) 100%);
+    --gradient-burgundy: linear-gradient(135deg, hsl(355, 52%, 31%) 0%, hsl(355, 45%, 40%) 100%);
     --gradient-cream: linear-gradient(180deg, hsl(40, 30%, 96%) 0%, hsl(35, 20%, 90%) 100%);
-    --gradient-hero-overlay: linear-gradient(180deg, hsla(25, 30%, 10%, 0.5) 0%, hsla(25, 30%, 15%, 0.7) 100%);
+    --gradient-hero-overlay: linear-gradient(180deg, hsla(355, 52%, 10%, 0.5) 0%, hsla(355, 52%, 15%, 0.7) 100%);
 
     /* Shadows */
-    --shadow-soft: 0 4px 20px -4px hsla(25, 30%, 20%, 0.15);
-    --shadow-card: 0 8px 30px -8px hsla(25, 30%, 20%, 0.2);
+    --shadow-soft: 0 4px 20px -4px hsla(355, 52%, 20%, 0.15);
+    --shadow-card: 0 8px 30px -8px hsla(355, 52%, 20%, 0.2);
     --shadow-gold: 0 4px 20px -4px hsla(43, 70%, 52%, 0.4);
 
     /* Sidebar */
-    --sidebar-background: 25 30% 22%;
+    --sidebar-background: 355 52% 22%;
     --sidebar-foreground: 40 30% 96%;
     --sidebar-primary: 43 70% 52%;
-    --sidebar-primary-foreground: 25 30% 15%;
-    --sidebar-accent: 25 27% 35%;
+    --sidebar-primary-foreground: 355 52% 15%;
+    --sidebar-accent: 355 45% 35%;
     --sidebar-accent-foreground: 40 30% 96%;
-    --sidebar-border: 25 20% 30%;
+    --sidebar-border: 355 40% 30%;
     --sidebar-ring: 43 70% 52%;
   }
 
   .dark {
-    --background: 25 30% 8%;
+    --background: 355 30% 8%;
     --foreground: 40 20% 95%;
 
-    --card: 25 28% 12%;
+    --card: 355 28% 12%;
     --card-foreground: 40 20% 95%;
 
-    --popover: 25 28% 10%;
+    --popover: 355 28% 10%;
     --popover-foreground: 40 20% 95%;
 
     --primary: 43 70% 52%;
-    --primary-foreground: 25 30% 10%;
+    --primary-foreground: 355 52% 10%;
 
-    --secondary: 25 25% 18%;
+    --secondary: 355 25% 18%;
     --secondary-foreground: 40 20% 95%;
 
     --accent: 43 65% 55%;
-    --accent-foreground: 25 30% 10%;
+    --accent-foreground: 355 52% 10%;
 
-    --muted: 25 20% 20%;
-    --muted-foreground: 30 15% 65%;
+    --muted: 355 20% 20%;
+    --muted-foreground: 40 15% 65%;
 
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 25 20% 20%;
-    --input: 25 20% 20%;
+    --border: 355 20% 20%;
+    --input: 355 20% 20%;
     --ring: 43 70% 52%;
 
-    --coffee-dark: 25 28% 12%;
-    --coffee-medium: 25 25% 25%;
-    --coffee-light: 30 20% 40%;
+    --coffee-dark: 355 28% 12%;
+    --coffee-medium: 355 25% 25%;
+    --coffee-light: 355 20% 40%;
   }
 }
 
@@ -204,8 +204,8 @@
     background: var(--gradient-gold);
   }
 
-  .bg-gradient-brown {
-    background: var(--gradient-brown);
+  .bg-gradient-burgundy {
+    background: var(--gradient-burgundy);
   }
 
   .bg-gradient-cream {
