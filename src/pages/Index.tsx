@@ -1,13 +1,40 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Helmet } from 'react-helmet-async';
+import Navbar from '@/components/Navbar';
+import HeroSection from '@/components/HeroSection';
+import AboutSection from '@/components/AboutSection';
+import MenuSection from '@/components/MenuSection';
+import ServicesSection from '@/components/ServicesSection';
+import VisionSection from '@/components/VisionSection';
+import GallerySection from '@/components/GallerySection';
+import Footer from '@/components/Footer';
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <>
+      <Helmet>
+        <title>الفنار للقهوة | تجربة قهوة استثنائية منذ ٢٠٠١</title>
+        <meta 
+          name="description" 
+          content="الفنار للقهوة - سلسلة مقاهٍ سعودية رائدة تقدم أجود أنواع القهوة العربية والعالمية منذ عام ٢٠٠١. اكتشف تجربة قهوة استثنائية." 
+        />
+        <meta name="keywords" content="قهوة, مقهى, الفنار, قهوة عربية, كوفي شوب, السعودية, الجبيل" />
+        <meta property="og:title" content="الفنار للقهوة | تجربة قهوة استثنائية" />
+        <meta property="og:description" content="نقدم لكم أجود أنواع القهوة العربية والعالمية منذ ٢٠٠١" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://alfanar-coffee.com" />
+      </Helmet>
+      
+      <main className="overflow-hidden">
+        <Navbar />
+        <HeroSection />
+        <AboutSection />
+        <MenuSection />
+        <ServicesSection />
+        <VisionSection />
+        <GallerySection />
+        <Footer />
+      </main>
+    </>
   );
 };
 
