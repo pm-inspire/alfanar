@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import AnnouncementBar from '@/components/AnnouncementBar';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
@@ -25,6 +26,7 @@ const Index = () => {
       </Helmet>
       
       <main className="overflow-hidden">
+        <AnnouncementBar />
         <Navbar />
         <HeroSection />
         <AboutSection />
