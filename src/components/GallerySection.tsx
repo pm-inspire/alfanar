@@ -2,18 +2,18 @@ import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { X } from 'lucide-react';
 
-import gallery1 from '@/assets/gallery-1.jpg';
-import gallery2 from '@/assets/gallery-2.jpg';
-import gallery3 from '@/assets/gallery-3.jpg';
-import gallery4 from '@/assets/gallery-4.jpg';
+import cafe1 from '@/assets/cafe-1.jpg';
+import cafe2 from '@/assets/cafe-2.jpg';
+import cafe3 from '@/assets/cafe-3.jpg';
+import cafe4 from '@/assets/cafe-4.jpg';
 import gallery5 from '@/assets/gallery-5.jpg';
 import gallery6 from '@/assets/gallery-6.jpg';
 
 const galleryImages = [
-  { src: gallery1, alt: 'باريستا يعد القهوة', span: 'col-span-1 row-span-1' },
-  { src: gallery2, alt: 'ديكور المقهى الداخلي', span: 'col-span-1 row-span-2' },
-  { src: gallery3, alt: 'القهوة العربية التقليدية', span: 'col-span-1 row-span-1' },
-  { src: gallery4, alt: 'المعجنات الطازجة', span: 'col-span-2 row-span-1' },
+  { src: cafe1, alt: 'أجواء مقهى الفنار', span: 'col-span-1 row-span-1' },
+  { src: cafe2, alt: 'ديكور المقهى الداخلي', span: 'col-span-1 row-span-2' },
+  { src: cafe3, alt: 'تجربة القهوة المميزة', span: 'col-span-1 row-span-1' },
+  { src: cafe4, alt: 'أجواء الكافيه', span: 'col-span-2 row-span-1' },
   { src: gallery5, alt: 'حبوب القهوة', span: 'col-span-1 row-span-1' },
   { src: gallery6, alt: 'واجهة المقهى', span: 'col-span-1 row-span-1' },
 ];
