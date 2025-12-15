@@ -1,0 +1,224 @@
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, Globe, ShoppingBag } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import alfanarLogo from '@/assets/alfanar-logo.svg';
+
+const navLinks = [
+  { name: 'الرئيسية', href: '#home' },
+  { name: 'من نحن', href: '#about' },
+  { name: 'المنيو', href: '#menu' },
+  { name: 'اتصل بنا', href: '#contact' },
+];
+
+interface TimeLeft {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+const Header = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // Countdown state
+  const [launchDate] = useState(() => {
+    const date = new Date();
+    date.setDate(date.getDate() + 30);
+    return date;
+  });
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 100);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const difference = launchDate.getTime() - new Date().getTime();
+      
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+    return () => clearInterval(timer);
+  }, [launchDate]);
+
+  const scrollToSection = (href: string) => {
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMobileMenuOpen(false);
+  };
+
+  const TimeBlock = ({ value, label }: { value: number; label: string }) => (
+    <div className="flex flex-col items-center">
+      <div className="bg-primary-foreground/15 backdrop-blur-sm rounded px-1.5 py-0.5 md:px-2 md:py-1 min-w-[28px] md:min-w-[40px]">
+        <span className="text-sm md:text-base font-bold text-accent tabular-nums">
+          {value.toString().padStart(2, '0')}
+        </span>
+      </div>
+      <span className="text-[8px] md:text-[10px] text-primary-foreground/60 mt-0.5">{label}</span>
+    </div>
+  );
+
+  return (
+    <header className="fixed top-0 right-0 left-0 z-50">
+      {/* Announcement Bar - Collapsible on scroll */}
+      <AnimatePresence>
+        {!isScrolled && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="bg-primary overflow-hidden"
+          >
+            <div className="container-rtl py-2.5 md:py-3">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-6">
+                {/* Text */}
+                <div className="flex items-center gap-2">
+                  <ShoppingBag className="h-4 w-4 text-accent" />
+                  <span className="text-primary-foreground text-xs md:text-sm font-medium">
+                    خدمة الطلب من الموقع <span className="text-accent">قريباً</span>
+                  </span>
+                </div>
+
+                {/* Countdown */}
+                <div className="flex items-center gap-1.5 md:gap-2">
+                  <TimeBlock value={timeLeft.seconds} label="ثانية" />
+                  <span className="text-accent text-sm font-bold mb-3">:</span>
+                  <TimeBlock value={timeLeft.minutes} label="دقيقة" />
+                  <span className="text-accent text-sm font-bold mb-3">:</span>
+                  <TimeBlock value={timeLeft.hours} label="ساعة" />
+                  <span className="text-accent text-sm font-bold mb-3">:</span>
+                  <TimeBlock value={timeLeft.days} label="يوم" />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Main Navbar */}
+      <motion.nav
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className={`transition-all duration-300 ${
+          isScrolled
+            ? 'bg-background/95 backdrop-blur-md shadow-soft py-3'
+            : 'bg-primary/90 backdrop-blur-sm py-4'
+        }`}
+      >
+        <div className="container-rtl flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center gap-3">
+            <img 
+              src={alfanarLogo} 
+              alt="الفنار للقهوة" 
+              className={`h-10 md:h-12 w-auto transition-all duration-300 ${
+                isScrolled ? '' : 'brightness-0 invert'
+              }`}
+            />
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <button
+                key={link.name}
+                onClick={() => scrollToSection(link.href)}
+                className={`gold-underline text-base font-medium transition-colors duration-300 ${
+                  isScrolled
+                    ? 'text-foreground hover:text-accent'
+                    : 'text-primary-foreground hover:text-accent'
+                }`}
+              >
+                {link.name}
+              </button>
+            ))}
+            
+            {/* Language Toggle */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className={`rounded-full ${
+                isScrolled
+                  ? 'text-foreground hover:bg-accent/20'
+                  : 'text-primary-foreground hover:bg-primary-foreground/10'
+              }`}
+              aria-label="تبديل اللغة"
+            >
+              <Globe className="h-5 w-5" />
+            </Button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className={`md:hidden ${
+              isScrolled ? 'text-foreground' : 'text-primary-foreground'
+            }`}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
+          >
+            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </Button>
+        </div>
+
+        {/* Mobile Menu */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-background border-t border-border overflow-hidden"
+            >
+              <div className="container-rtl py-6 flex flex-col gap-4">
+                {navLinks.map((link, index) => (
+                  <motion.button
+                    key={link.name}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.05 * index }}
+                    onClick={() => scrollToSection(link.href)}
+                    className="text-foreground text-lg font-medium py-2 text-right hover:text-accent transition-colors"
+                  >
+                    {link.name}
+                  </motion.button>
+                ))}
+                <div className="flex items-center justify-end gap-2 pt-4 border-t border-border">
+                  <span className="text-muted-foreground text-sm">اللغة</span>
+                  <Button variant="outline" size="sm">
+                    <Globe className="h-4 w-4 ml-2" />
+                    AR/EN
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+    </header>
+  );
+};
+
+export default Header;
