@@ -1,7 +1,7 @@
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ShoppingBag } from 'lucide-react';
 
 import menuFrenchToast from '@/assets/menu-french-toast.jpg';
 import menuBrownie from '@/assets/menu-brownie.jpg';
@@ -35,9 +35,54 @@ const menuItems = [
   },
 ];
 
+interface TimeLeft {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
 const MenuSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  // Countdown state
+  const [launchDate] = useState(() => {
+    const date = new Date();
+    date.setDate(date.getDate() + 30);
+    return date;
+  });
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const difference = launchDate.getTime() - new Date().getTime();
+      
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+    return () => clearInterval(timer);
+  }, [launchDate]);
+
+  const TimeBlock = ({ value, label }: { value: number; label: string }) => (
+    <div className="flex flex-col items-center">
+      <div className="bg-primary rounded-lg px-3 py-2 md:px-4 md:py-3 min-w-[50px] md:min-w-[70px]">
+        <span className="text-xl md:text-3xl font-bold text-primary-foreground tabular-nums">
+          {value.toString().padStart(2, '0')}
+        </span>
+      </div>
+      <span className="text-xs md:text-sm text-muted-foreground mt-2">{label}</span>
+    </div>
+  );
 
   return (
     <section
@@ -110,6 +155,42 @@ const MenuSection = () => {
             عرض القائمة الكاملة
             <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
           </Button>
+        </motion.div>
+
+        {/* Coming Soon Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.7 }}
+          className="mt-16 bg-gradient-to-l from-primary via-coffee-medium to-primary rounded-2xl p-6 md:p-10"
+        >
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+            {/* Text Content */}
+            <div className="flex items-center gap-4 text-center lg:text-right">
+              <div className="w-14 h-14 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
+                <ShoppingBag className="h-7 w-7 text-accent" />
+              </div>
+              <div>
+                <h3 className="text-xl md:text-2xl font-bold text-primary-foreground mb-1">
+                  خدمة الطلب من الموقع
+                </h3>
+                <p className="text-primary-foreground/70 text-sm md:text-base">
+                  قريباً... استعدوا لتجربة طلب فريدة من نوعها!
+                </p>
+              </div>
+            </div>
+
+            {/* Countdown */}
+            <div className="flex items-center gap-3 md:gap-4">
+              <TimeBlock value={timeLeft.seconds} label="ثانية" />
+              <span className="text-accent text-2xl font-bold mb-6">:</span>
+              <TimeBlock value={timeLeft.minutes} label="دقيقة" />
+              <span className="text-accent text-2xl font-bold mb-6">:</span>
+              <TimeBlock value={timeLeft.hours} label="ساعة" />
+              <span className="text-accent text-2xl font-bold mb-6">:</span>
+              <TimeBlock value={timeLeft.days} label="يوم" />
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
