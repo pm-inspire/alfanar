@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import alfanarLogo from '@/assets/alfanar-logo.svg';
 
 const navLinks = [
   { name: 'الرئيسية', href: '#home' },
@@ -50,12 +51,11 @@ const Navbar = () => {
           transition={{ delay: 0.2 }}
           className="flex items-center gap-3"
         >
-          <h1 className={`text-2xl md:text-3xl font-bold transition-colors duration-300 ${
-            isScrolled ? 'text-primary' : 'text-primary-foreground'
-          }`}>
-            الفنار
-            <span className="text-gradient-gold"> للقهوة</span>
-          </h1>
+          <img 
+            src={alfanarLogo} 
+            alt="الفنار للقهوة" 
+            className="h-12 md:h-16 w-auto"
+          />
         </motion.div>
 
         {/* Desktop Navigation */}

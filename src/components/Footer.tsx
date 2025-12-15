@@ -7,6 +7,7 @@ import {
   Instagram,
   Twitter,
 } from 'lucide-react';
+import alfanarLogo from '@/assets/alfanar-logo.svg';
 
 const quickLinks = [
   { name: 'الرئيسية', href: '#home' },
@@ -48,10 +49,11 @@ const Footer = () => {
             transition={{ duration: 0.5 }}
             className="lg:col-span-1"
           >
-            <h2 className="text-2xl font-bold text-primary-foreground mb-4">
-              الفنار
-              <span className="text-gradient-gold"> للقهوة</span>
-            </h2>
+            <img 
+              src={alfanarLogo} 
+              alt="الفنار للقهوة" 
+              className="h-16 w-auto mb-4 brightness-0 invert"
+            />
             <p className="text-primary-foreground/70 leading-relaxed mb-6">
               منذ عام ٢٠٠١ نقدم لكم أجود أنواع القهوة العربية والعالمية مع التزامنا الدائم بالجودة والتميز.
             </p>

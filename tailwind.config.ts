@@ -131,7 +131,7 @@ export default {
       },
       backgroundImage: {
         "gradient-gold": "linear-gradient(135deg, hsl(43, 70%, 52%) 0%, hsl(35, 65%, 45%) 100%)",
-        "gradient-brown": "linear-gradient(135deg, hsl(25, 30%, 22%) 0%, hsl(25, 27%, 35%) 100%)",
+        "gradient-burgundy": "linear-gradient(135deg, hsl(355, 52%, 31%) 0%, hsl(355, 45%, 40%) 100%)",
         "gradient-cream": "linear-gradient(180deg, hsl(40, 30%, 96%) 0%, hsl(35, 20%, 90%) 100%)",
         "coffee-pattern": "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%235D4037' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
       },
