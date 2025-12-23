@@ -1,19 +1,21 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Globe } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import alfanarLogo from '@/assets/alfanar-logo.svg';
 
 const navLinks = [
-  { name: 'الرئيسية', href: '#home' },
-  { name: 'من نحن', href: '#about' },
-  { name: 'المنيو', href: '#menu' },
-  { name: 'اتصل بنا', href: '#contact' },
+  { name: 'الرئيسية', href: '/', isRoute: true },
+  { name: 'من نحن', href: '/about', isRoute: true },
+  { name: 'المنيو', href: '/#menu', isRoute: false },
+  { name: 'اتصل بنا', href: '/contact', isRoute: true },
 ];
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,10 +26,17 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const handleNavClick = (href: string, isRoute: boolean) => {
+    if (!isRoute && href.includes('#')) {
+      const hash = href.split('#')[1];
+      if (location.pathname === '/') {
+        const element = document.querySelector(`#${hash}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        window.location.href = href;
+      }
     }
     setIsMobileMenuOpen(false);
   };
@@ -46,7 +55,7 @@ const Header = () => {
       >
         <div className="container-rtl flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3">
             <img 
               src={alfanarLogo} 
               alt="الفنار للقهوة" 
@@ -54,22 +63,36 @@ const Header = () => {
                 isScrolled ? '' : 'brightness-0 invert'
               }`}
             />
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <button
-                key={link.name}
-                onClick={() => scrollToSection(link.href)}
-                className={`gold-underline text-base font-medium transition-colors duration-300 ${
-                  isScrolled
-                    ? 'text-foreground hover:text-accent'
-                    : 'text-primary-foreground hover:text-accent'
-                }`}
-              >
-                {link.name}
-              </button>
+              link.isRoute ? (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className={`gold-underline text-base font-medium transition-colors duration-300 ${
+                    isScrolled
+                      ? 'text-foreground hover:text-accent'
+                      : 'text-primary-foreground hover:text-accent'
+                  } ${location.pathname === link.href ? 'text-accent' : ''}`}
+                >
+                  {link.name}
+                </Link>
+              ) : (
+                <button
+                  key={link.name}
+                  onClick={() => handleNavClick(link.href, link.isRoute)}
+                  className={`gold-underline text-base font-medium transition-colors duration-300 ${
+                    isScrolled
+                      ? 'text-foreground hover:text-accent'
+                      : 'text-primary-foreground hover:text-accent'
+                  }`}
+                >
+                  {link.name}
+                </button>
+              )
             ))}
             
             {/* Language Toggle */}
@@ -112,16 +135,35 @@ const Header = () => {
             >
               <div className="container-rtl py-6 flex flex-col gap-4">
                 {navLinks.map((link, index) => (
-                  <motion.button
-                    key={link.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.05 * index }}
-                    onClick={() => scrollToSection(link.href)}
-                    className="text-foreground text-lg font-medium py-2 text-right hover:text-accent transition-colors"
-                  >
-                    {link.name}
-                  </motion.button>
+                  link.isRoute ? (
+                    <motion.div
+                      key={link.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.05 * index }}
+                    >
+                      <Link
+                        to={link.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`block text-foreground text-lg font-medium py-2 text-right hover:text-accent transition-colors ${
+                          location.pathname === link.href ? 'text-accent' : ''
+                        }`}
+                      >
+                        {link.name}
+                      </Link>
+                    </motion.div>
+                  ) : (
+                    <motion.button
+                      key={link.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.05 * index }}
+                      onClick={() => handleNavClick(link.href, link.isRoute)}
+                      className="text-foreground text-lg font-medium py-2 text-right hover:text-accent transition-colors"
+                    >
+                      {link.name}
+                    </motion.button>
+                  )
                 ))}
                 <div className="flex items-center justify-end gap-2 pt-4 border-t border-border">
                   <span className="text-muted-foreground text-sm">اللغة</span>
