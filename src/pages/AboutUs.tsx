@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { Coffee, Heart, Users, Award, Target, Sparkles } from 'lucide-react';
+import { Coffee, Heart, Users, Award, Target, Eye } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import cafe1 from '@/assets/cafe-1.jpg';
@@ -10,41 +10,40 @@ const values = [
   {
     icon: Coffee,
     title: 'الجودة',
-    description: 'نختار أفضل حبوب القهوة من مصادر عالمية موثوقة لضمان تجربة استثنائية'
+    description: 'نختار أجود أنواع حبوب البن من أفضل المزارع حول العالم'
   },
   {
     icon: Heart,
     title: 'الشغف',
-    description: 'نحب ما نقدمه ونسعى دائماً لإسعاد عملائنا بكل كوب قهوة'
+    description: 'نحب ما نقدمه ونسعى دائماً لتقديم تجربة مميزة'
   },
   {
     icon: Users,
-    title: 'المجتمع',
-    description: 'نؤمن بأن القهوة تجمع الناس، ونسعى لخلق مساحة دافئة للجميع'
+    title: 'الضيافة',
+    description: 'نستقبل كل ضيف كأنه فرد من العائلة بكل حب وترحاب'
   },
   {
     icon: Award,
     title: 'التميز',
-    description: 'نلتزم بأعلى معايير الجودة في كل ما نقدمه من مشروبات ومأكولات'
+    description: 'نسعى للتميز في كل تفاصيل ما نقدمه من خدمة ومنتجات'
   }
 ];
 
-const milestones = [
-  { year: '٢٠٠١', event: 'تأسيس أول فرع للفنار في الجبيل' },
-  { year: '٢٠٠٨', event: 'افتتاح الفرع الثاني وتوسيع القائمة' },
-  { year: '٢٠١٥', event: 'إطلاق خط القهوة المختصة' },
-  { year: '٢٠٢٠', event: 'افتتاح فروع جديدة في المنطقة' },
-  { year: '٢٠٢٤', event: 'إطلاق الهوية الجديدة والتوسع المستمر' }
+const timeline = [
+  { year: '٢٠٠١', title: 'البداية', description: 'افتتاح أول فرع في الجبيل الصناعية' },
+  { year: '٢٠٠٨', title: 'التوسع', description: 'افتتاح الفرع الثاني وتوسيع قائمة الطعام' },
+  { year: '٢٠١٥', title: 'التطوير', description: 'تحديث الهوية البصرية وإضافة خدمات جديدة' },
+  { year: '٢٠٢٣', title: 'الحاضر', description: 'نستمر في النمو مع الحفاظ على جودتنا العالية' }
 ];
 
 const AboutUs = () => {
   return (
     <>
       <Helmet>
-        <title>من نحن | الفنار للقهوة</title>
+        <title>من نحن - الفنار للقهوة</title>
         <meta 
           name="description" 
-          content="تعرف على قصة الفنار للقهوة - رحلتنا من ٢٠٠١ إلى اليوم. نحن نقدم أجود أنواع القهوة بشغف وحب." 
+          content="تعرف على قصة الفنار للقهوة، رحلتنا منذ عام ٢٠٠١ في تقديم أجود أنواع القهوة العربية والعالمية" 
         />
       </Helmet>
       
@@ -52,143 +51,170 @@ const AboutUs = () => {
         <Header />
         
         {/* Hero Section */}
-        <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-20">
           <div className="absolute inset-0">
             <img 
               src={cafe1} 
-              alt="الفنار للقهوة" 
+              alt="أجواء مقهى الفنار" 
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/70 to-primary/90" />
+            <div 
+              className="absolute inset-0"
+              style={{
+                background: 'linear-gradient(180deg, hsla(355, 52%, 10%, 0.7) 0%, hsla(355, 52%, 15%, 0.85) 100%)',
+              }}
+            />
           </div>
           
-          <motion.div 
-            className="relative z-10 text-center px-4"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-4">
-              قصتنا
-            </h1>
-            <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-2xl mx-auto">
-              رحلة شغف بدأت منذ أكثر من عقدين
-            </p>
-          </motion.div>
+          <div className="relative z-10 container-rtl text-center">
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-block px-6 py-2 bg-accent/20 backdrop-blur-sm rounded-full text-accent font-medium text-sm mb-6"
+            >
+              تعرف علينا
+            </motion.span>
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6"
+            >
+              قصتنا مع <span className="text-gradient-gold">القهوة</span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto"
+            >
+              رحلة من الشغف والتميز تمتد لأكثر من عقدين
+            </motion.p>
+          </div>
         </section>
 
-        {/* Story Section */}
-        <section className="py-20 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+        {/* Our Story Section */}
+        <section className="section-padding bg-background">
+          <div className="container-rtl">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <span className="inline-block px-4 py-2 bg-accent/20 text-accent rounded-full text-sm font-medium mb-6">
-                  <Sparkles className="inline w-4 h-4 ml-2" />
-                  منذ ٢٠٠١
+                <span className="inline-block px-4 py-1.5 bg-accent/10 rounded-full text-accent font-medium text-sm mb-4">
+                  قصتنا
                 </span>
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                  قهوة بطعم الأصالة
+                <h2 className="section-title mb-6">
+                  رحلة <span className="text-gradient-gold">الفنار</span>
                 </h2>
                 <div className="space-y-4 text-muted-foreground leading-relaxed">
                   <p>
-                    بدأت قصة الفنار في عام ٢٠٠١ برؤية بسيطة: تقديم قهوة استثنائية في أجواء دافئة وترحيبية. 
-                    منذ ذلك الحين، أصبحنا جزءاً لا يتجزأ من مجتمعنا، نشارك الناس لحظاتهم الخاصة كوباً بعد كوب.
+                    بدأت قصة الفنار للقهوة في عام ٢٠٠١ في مدينة الجبيل الصناعية، حيث كانت الرؤية واضحة منذ اليوم الأول: تقديم تجربة قهوة استثنائية تجمع بين الأصالة العربية والحداثة العالمية.
                   </p>
                   <p>
-                    نؤمن بأن القهوة أكثر من مجرد مشروب - إنها تجربة تجمع الأصدقاء والعائلات، 
-                    وتخلق ذكريات لا تُنسى. لهذا نحرص على اختيار أجود حبوب القهوة من مصادر عالمية، 
-                    وتحميصها بعناية فائقة لنقدم لكم كوباً مثالياً في كل مرة.
+                    على مدار أكثر من عقدين، نمت الفنار من مقهى صغير إلى وجهة مفضلة لعشاق القهوة، محافظين على التزامنا الراسخ بالجودة والضيافة الحقيقية.
                   </p>
                   <p>
-                    فريقنا من الباريستا المحترفين يعمل بشغف لتقديم أفضل تجربة قهوة ممكنة، 
-                    مع الحفاظ على الأصالة العربية والانفتاح على النكهات العالمية.
+                    نفتخر بأن نكون جزءاً من مجتمعنا، نستقبل ضيوفنا بابتسامة ونقدم لهم لحظات من السعادة مع كل فنجان قهوة.
                   </p>
                 </div>
               </motion.div>
 
               <motion.div
-                className="relative"
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
+                className="relative"
               >
                 <div className="relative rounded-2xl overflow-hidden shadow-card">
-                  <img 
-                    src={cafe2} 
-                    alt="أجواء الفنار" 
+                  <img
+                    src={cafe2}
+                    alt="داخل مقهى الفنار"
                     className="w-full h-[400px] object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
                 </div>
-                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent/20 rounded-full blur-2xl" />
+                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent/20 rounded-full blur-3xl" />
                 <div className="absolute -top-6 -left-6 w-24 h-24 bg-primary/20 rounded-full blur-2xl" />
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Mission Section */}
-        <section className="py-20 bg-card">
-          <div className="container mx-auto px-4">
-            <motion.div
-              className="max-w-4xl mx-auto text-center"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <Target className="w-16 h-16 text-accent mx-auto mb-6" />
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                رسالتنا
-              </h2>
-              <p className="text-xl text-muted-foreground leading-relaxed">
-                نسعى لأن نكون الوجهة الأولى لعشاق القهوة في المنطقة، من خلال تقديم تجربة 
-                فريدة تجمع بين الجودة العالية والأجواء المميزة والخدمة الاستثنائية. نحن ملتزمون 
-                بالتطوير المستمر والحفاظ على ثقة عملائنا الكرام.
-              </p>
-            </motion.div>
+        {/* Vision & Mission */}
+        <section className="section-padding bg-secondary/50">
+          <div className="container-rtl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="bg-card rounded-2xl p-8 shadow-soft border border-border/50"
+              >
+                <div className="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center mb-6">
+                  <Eye className="h-7 w-7 text-accent" />
+                </div>
+                <h3 className="text-2xl font-bold text-foreground mb-4">رؤيتنا</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  أن نكون الوجهة الأولى لعشاق القهوة في المنطقة الشرقية، نقدم تجربة فريدة تجمع بين الجودة العالية والأجواء الدافئة والخدمة المتميزة.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="bg-card rounded-2xl p-8 shadow-soft border border-border/50"
+              >
+                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                  <Target className="h-7 w-7 text-primary" />
+                </div>
+                <h3 className="text-2xl font-bold text-foreground mb-4">رسالتنا</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  نسعى لإسعاد ضيوفنا من خلال تقديم أجود أنواع القهوة والمأكولات في أجواء مريحة، مع فريق عمل شغوف يضع رضا العميل في المقام الأول.
+                </p>
+              </motion.div>
+            </div>
           </div>
         </section>
 
         {/* Values Section */}
-        <section className="py-20 bg-background">
-          <div className="container mx-auto px-4">
+        <section className="section-padding bg-background">
+          <div className="container-rtl">
             <motion.div
-              className="text-center mb-16"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-12"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                قيمنا
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                المبادئ التي نؤمن بها ونعمل وفقها كل يوم
-              </p>
+              <span className="inline-block px-4 py-1.5 bg-accent/10 rounded-full text-accent font-medium text-sm mb-4">
+                ما يميزنا
+              </span>
+              <h2 className="section-title">قيمنا</h2>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {values.map((value, index) => (
                 <motion.div
                   key={value.title}
-                  className="bg-card p-6 rounded-2xl border border-border hover:border-accent/50 transition-all duration-300 hover:shadow-card group"
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-card rounded-2xl p-6 text-center shadow-soft border border-border/50 card-hover"
                 >
-                  <div className="w-14 h-14 bg-accent/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-accent/30 transition-colors">
-                    <value.icon className="w-7 h-7 text-accent" />
+                  <div className="w-16 h-16 bg-gradient-gold rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-gold">
+                    <value.icon className="h-8 w-8 text-accent-foreground" />
                   </div>
                   <h3 className="text-xl font-bold text-foreground mb-2">{value.title}</h3>
-                  <p className="text-muted-foreground text-sm">{value.description}</p>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{value.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -196,38 +222,52 @@ const AboutUs = () => {
         </section>
 
         {/* Timeline Section */}
-        <section className="py-20 bg-primary">
-          <div className="container mx-auto px-4">
+        <section className="section-padding bg-primary">
+          <div className="container-rtl">
             <motion.div
-              className="text-center mb-16"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-12"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
-                رحلتنا عبر السنين
+              <span className="inline-block px-4 py-1.5 bg-accent/20 rounded-full text-accent font-medium text-sm mb-4">
+                رحلتنا
+              </span>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground">
+                محطات في <span className="text-gradient-gold">مسيرتنا</span>
               </h2>
             </motion.div>
 
-            <div className="max-w-3xl mx-auto">
-              {milestones.map((milestone, index) => (
-                <motion.div
-                  key={milestone.year}
-                  className="flex items-center gap-6 mb-8 last:mb-0"
-                  initial={{ opacity: 0, x: index % 2 === 0 ? 30 : -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <div className="flex-shrink-0 w-20 h-20 bg-accent rounded-full flex items-center justify-center shadow-gold">
-                    <span className="text-lg font-bold text-accent-foreground">{milestone.year}</span>
-                  </div>
-                  <div className="flex-1 bg-primary-foreground/10 backdrop-blur-sm rounded-xl p-4">
-                    <p className="text-primary-foreground">{milestone.event}</p>
-                  </div>
-                </motion.div>
-              ))}
+            <div className="relative">
+              {/* Timeline Line */}
+              <div className="absolute top-0 bottom-0 right-1/2 w-0.5 bg-accent/30 hidden md:block" />
+
+              <div className="space-y-8">
+                {timeline.map((item, index) => (
+                  <motion.div
+                    key={item.year}
+                    initial={{ opacity: 0, x: index % 2 === 0 ? 30 : -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className={`flex items-center gap-8 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
+                  >
+                    <div className={`flex-1 ${index % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
+                      <div className="bg-primary-foreground/10 backdrop-blur-sm rounded-2xl p-6 border border-primary-foreground/20">
+                        <span className="text-accent font-bold text-2xl">{item.year}</span>
+                        <h3 className="text-xl font-bold text-primary-foreground mt-2">{item.title}</h3>
+                        <p className="text-primary-foreground/70 mt-2">{item.description}</p>
+                      </div>
+                    </div>
+
+                    {/* Timeline Dot */}
+                    <div className="hidden md:flex w-4 h-4 bg-accent rounded-full flex-shrink-0 shadow-gold" />
+
+                    <div className="flex-1 hidden md:block" />
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
