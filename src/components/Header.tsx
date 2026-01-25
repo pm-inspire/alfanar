@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Globe } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import ProfileDropdown from '@/components/ProfileDropdown';
 import alfanarLogo from '@/assets/alfanar-logo.svg';
 
 const navLinks = [
@@ -11,6 +12,13 @@ const navLinks = [
   { name: 'المنيو', href: '/#menu', isRoute: false },
   { name: 'اتصل بنا', href: '/contact', isRoute: true },
 ];
+
+// TODO: استبدال هذا بحالة المستخدم الحقيقية من context أو API
+// للتجربة: قم بتغيير القيمة إلى null لإظهار أزرار تسجيل الدخول
+const mockUser = {
+  name: 'محمد الفهد',
+  phone: '+966 50 XXX XXXX',
+};
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -108,6 +116,16 @@ const Header = () => {
             >
               <Globe className="h-5 w-5" />
             </Button>
+
+            {/* Profile Dropdown / Auth Buttons */}
+            <ProfileDropdown 
+              user={mockUser}
+              isScrolled={isScrolled}
+              onLogout={() => {
+                // TODO: تنفيذ عملية تسجيل الخروج
+                console.log('User logged out');
+              }}
+            />
           </div>
 
           {/* Mobile Menu Button */}
@@ -165,12 +183,75 @@ const Header = () => {
                     </motion.button>
                   )
                 ))}
-                <div className="flex items-center justify-end gap-2 pt-4 border-t border-border">
-                  <span className="text-muted-foreground text-sm">اللغة</span>
-                  <Button variant="outline" size="sm">
-                    <Globe className="h-4 w-4 ml-2" />
-                    AR/EN
-                  </Button>
+                <div className="flex flex-col gap-4 pt-4 border-t border-border">
+                  {/* Mobile Profile Section */}
+                  {mockUser ? (
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center">
+                          <span className="text-accent-foreground font-bold">
+                            {mockUser.name.charAt(0)}
+                          </span>
+                        </div>
+                        <div>
+                          <p className="font-bold text-foreground">{mockUser.name}</p>
+                          <p className="text-sm text-muted-foreground" dir="ltr">{mockUser.phone}</p>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <Link
+                          to="/account/profile"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="text-sm text-foreground hover:text-accent p-2 bg-secondary rounded-lg text-center"
+                        >
+                          حسابي
+                        </Link>
+                        <Link
+                          to="/account/orders"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="text-sm text-foreground hover:text-accent p-2 bg-secondary rounded-lg text-center"
+                        >
+                          طلباتي
+                        </Link>
+                        <Link
+                          to="/cart"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="text-sm text-foreground hover:text-accent p-2 bg-secondary rounded-lg text-center"
+                        >
+                          السلة
+                        </Link>
+                        <Link
+                          to="/account/wishlist"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="text-sm text-foreground hover:text-accent p-2 bg-secondary rounded-lg text-center"
+                        >
+                          المفضلة
+                        </Link>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex gap-2">
+                      <Link to="/auth/login" className="flex-1">
+                        <Button variant="outline" className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
+                          تسجيل الدخول
+                        </Button>
+                      </Link>
+                      <Link to="/auth/register" className="flex-1">
+                        <Button variant="gold" className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
+                          تسجيل جديد
+                        </Button>
+                      </Link>
+                    </div>
+                  )}
+                  
+                  {/* Language Toggle */}
+                  <div className="flex items-center justify-end gap-2">
+                    <span className="text-muted-foreground text-sm">اللغة</span>
+                    <Button variant="outline" size="sm">
+                      <Globe className="h-4 w-4 ml-2" />
+                      AR/EN
+                    </Button>
+                  </div>
                 </div>
               </div>
             </motion.div>
