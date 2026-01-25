@@ -1,9 +1,17 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Globe } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, Globe, ShoppingCart, User, LogOut, Package, Heart, Bell, MapPin } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import alfanarLogo from '@/assets/alfanar-logo.svg';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navLinks = [
   { name: 'الرئيسية', href: '/', isRoute: true },
@@ -16,6 +24,9 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  // Mock auth state
+  const [isLoggedIn, setIsLoggedIn] = useState(true); 
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +50,11 @@ const Header = () => {
       }
     }
     setIsMobileMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    navigate('/');
   };
 
   return (
@@ -66,7 +82,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
               link.isRoute ? (
                 <Link
@@ -95,6 +111,88 @@ const Header = () => {
               )
             ))}
             
+            <div className="h-6 w-px bg-border/50 mx-2" />
+
+            {/* Cart Icon */}
+            <Link to="/cart" className="relative group">
+              <Button
+                variant="ghost"
+                size="icon"
+                className={`rounded-full ${
+                  isScrolled
+                    ? 'text-foreground hover:bg-accent/20'
+                    : 'text-primary-foreground hover:bg-primary-foreground/10'
+                }`}
+              >
+                <ShoppingCart className="h-5 w-5" />
+                <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-red-500 text-[10px] font-bold text-white flex items-center justify-center">
+                  2
+                </span>
+              </Button>
+            </Link>
+
+            {/* User Dropdown or Login Button */}
+            {isLoggedIn ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className={`rounded-full ${
+                      isScrolled
+                        ? 'text-foreground hover:bg-accent/20'
+                        : 'text-primary-foreground hover:bg-primary-foreground/10'
+                    }`}
+                  >
+                    <User className="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56" dir="rtl">
+                  <DropdownMenuLabel>حسابي</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link to="/account/profile" className="cursor-pointer">
+                      <User className="ml-2 h-4 w-4" />
+                      البيانات الشخصية
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/account/orders" className="cursor-pointer">
+                      <Package className="ml-2 h-4 w-4" />
+                      طلباتي
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/account/wishlist" className="cursor-pointer">
+                      <Heart className="ml-2 h-4 w-4" />
+                      المفضلة
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/account/addresses" className="cursor-pointer">
+                      <MapPin className="ml-2 h-4 w-4" />
+                      عناويني
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/account/notifications" className="cursor-pointer">
+                      <Bell className="ml-2 h-4 w-4" />
+                      الإشعارات
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-500 focus:text-red-500">
+                    <LogOut className="ml-2 h-4 w-4" />
+                    تسجيل الخروج
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button asChild variant={isScrolled ? "default" : "secondary"} size="sm">
+                <Link to="/auth/login">تسجيل الدخول</Link>
+              </Button>
+            )}
+
             {/* Language Toggle */}
             <Button
               variant="ghost"
@@ -111,17 +209,36 @@ const Header = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={`md:hidden ${
-              isScrolled ? 'text-foreground' : 'text-primary-foreground'
-            }`}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label={isMobileMenuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
-          >
-            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </Button>
+          <div className="flex items-center gap-2 md:hidden">
+            <Link to="/cart" className="relative">
+              <Button
+                variant="ghost"
+                size="icon"
+                className={`rounded-full ${
+                  isScrolled
+                    ? 'text-foreground'
+                    : 'text-primary-foreground'
+                }`}
+              >
+                <ShoppingCart className="h-5 w-5" />
+                <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-red-500 text-[10px] font-bold text-white flex items-center justify-center">
+                  2
+                </span>
+              </Button>
+            </Link>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              className={`md:hidden ${
+                isScrolled ? 'text-foreground' : 'text-primary-foreground'
+              }`}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label={isMobileMenuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
+            >
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
@@ -165,6 +282,27 @@ const Header = () => {
                     </motion.button>
                   )
                 ))}
+                
+                <div className="border-t border-border pt-4 space-y-2">
+                  {isLoggedIn ? (
+                    <>
+                      <Link to="/account/profile" className="block py-2 text-right text-foreground hover:text-accent">
+                        الملف الشخصي
+                      </Link>
+                      <Link to="/account/orders" className="block py-2 text-right text-foreground hover:text-accent">
+                        طلباتي
+                      </Link>
+                      <button onClick={handleLogout} className="block w-full text-right py-2 text-red-500 hover:text-red-600">
+                        تسجيل الخروج
+                      </button>
+                    </>
+                  ) : (
+                    <Link to="/auth/login" className="block py-2 text-right text-foreground hover:text-accent">
+                      تسجيل الدخول
+                    </Link>
+                  )}
+                </div>
+
                 <div className="flex items-center justify-end gap-2 pt-4 border-t border-border">
                   <span className="text-muted-foreground text-sm">اللغة</span>
                   <Button variant="outline" size="sm">

@@ -1,12 +1,10 @@
 import { Helmet } from 'react-helmet-async';
-import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
 import MenuSection from '@/components/MenuSection';
 import ServicesSection from '@/components/ServicesSection';
 import VisionSection from '@/components/VisionSection';
 import GallerySection from '@/components/GallerySection';
-import Footer from '@/components/Footer';
 
 const Index = () => {
   return (
@@ -24,16 +22,14 @@ const Index = () => {
         <link rel="canonical" href="https://alfanar-coffee.com" />
       </Helmet>
       
-      <main className="overflow-hidden">
-        <Header />
+      <div className="overflow-hidden">
         <HeroSection />
         <AboutSection />
         <MenuSection />
         <ServicesSection />
         <VisionSection />
         <GallerySection />
-        <Footer />
-      </main>
+      </div>
     </>
   );
 };
