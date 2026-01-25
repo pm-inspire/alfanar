@@ -1,21 +1,40 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Globe } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, Globe, User, LogOut, Heart, Bell, MapPin, ClipboardList, UserCircle, ShoppingCart } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import alfanarLogo from '@/assets/alfanar-logo.svg';
+import { clearDemoUser, getDemoUser, subscribeDemoAuth } from '@/lib/demoAuth';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const navLinks = [
   { name: 'الرئيسية', href: '/', isRoute: true },
   { name: 'من نحن', href: '/about', isRoute: true },
   { name: 'المنيو', href: '/#menu', isRoute: false },
+  { name: 'المتجر', href: '/shop', isRoute: true },
+  { name: 'السلة', href: '/cart', isRoute: true },
   { name: 'اتصل بنا', href: '/contact', isRoute: true },
 ];
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [demoUser, setDemoUserState] = useState(() => {
+    try {
+      return getDemoUser();
+    } catch {
+      return null;
+    }
+  });
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +43,12 @@ const Header = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    return subscribeDemoAuth(() => {
+      setDemoUserState(getDemoUser());
+    });
   }, []);
 
   const handleNavClick = (href: string, isRoute: boolean) => {
@@ -39,6 +64,13 @@ const Header = () => {
       }
     }
     setIsMobileMenuOpen(false);
+  };
+
+  const onLogout = () => {
+    // TODO(auth): replace with real logout API + clear session/token.
+    clearDemoUser();
+    setIsMobileMenuOpen(false);
+    navigate('/auth/login');
   };
 
   return (
@@ -108,6 +140,74 @@ const Header = () => {
             >
               <Globe className="h-5 w-5" />
             </Button>
+
+            {/* Profile / Auth */}
+            {demoUser ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className={`rounded-full px-3 ${
+                      isScrolled
+                        ? 'text-foreground hover:bg-accent/20'
+                        : 'text-primary-foreground hover:bg-primary-foreground/10'
+                    }`}
+                    aria-label="قائمة الملف الشخصي"
+                  >
+                    <User className="h-4 w-4 ml-2" />
+                    {demoUser.firstName}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56">
+                  <DropdownMenuLabel className="text-right">حسابي</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild className="justify-end">
+                    <Link to="/account/profile" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-between gap-2 w-full">
+                      <UserCircle className="h-4 w-4 text-muted-foreground" />
+                      <span>البيانات الشخصية</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="justify-end">
+                    <Link to="/account/orders" className="flex items-center justify-between gap-2 w-full">
+                      <ClipboardList className="h-4 w-4 text-muted-foreground" />
+                      <span>طلباتي</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="justify-end">
+                    <Link to="/account/wishlist" className="flex items-center justify-between gap-2 w-full">
+                      <Heart className="h-4 w-4 text-muted-foreground" />
+                      <span>المفضلة</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="justify-end">
+                    <Link to="/account/notifications" className="flex items-center justify-between gap-2 w-full">
+                      <Bell className="h-4 w-4 text-muted-foreground" />
+                      <span>الإشعارات</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="justify-end">
+                    <Link to="/account/addresses" className="flex items-center justify-between gap-2 w-full">
+                      <MapPin className="h-4 w-4 text-muted-foreground" />
+                      <span>عناويني</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={onLogout} className="justify-end text-destructive focus:text-destructive">
+                    <LogOut className="h-4 w-4 ml-2" />
+                    تسجيل الخروج
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button
+                asChild
+                className={`rounded-full font-bold ${
+                  isScrolled ? 'bg-gradient-gold text-accent-foreground hover:opacity-90 shadow-gold' : 'bg-primary-foreground text-primary hover:bg-primary-foreground/90'
+                }`}
+              >
+                <Link to="/auth/login">تسجيل الدخول</Link>
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -165,6 +265,59 @@ const Header = () => {
                     </motion.button>
                   )
                 ))}
+
+                {/* Auth shortcuts (mobile) */}
+                <div className="pt-2 border-t border-border">
+                  {demoUser ? (
+                    <div className="space-y-2">
+                      <div className="text-right text-sm font-semibold text-foreground">
+                        مرحباً، {demoUser.firstName}
+                      </div>
+                      <Link
+                        to="/account/profile"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center justify-between rounded-xl border border-border/60 bg-card px-4 py-3 text-foreground hover:border-accent transition"
+                      >
+                        <UserCircle className="h-4 w-4 text-muted-foreground" />
+                        <span>البيانات الشخصية</span>
+                      </Link>
+                      <Link
+                        to="/cart"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center justify-between rounded-xl border border-border/60 bg-card px-4 py-3 text-foreground hover:border-accent transition"
+                      >
+                        <ShoppingCart className="h-4 w-4 text-muted-foreground" />
+                        <span>السلة</span>
+                      </Link>
+                      <Button
+                        variant="outline"
+                        className="w-full border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                        onClick={onLogout}
+                      >
+                        تسجيل الخروج
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <Button
+                        asChild
+                        className="bg-gradient-gold text-accent-foreground font-bold hover:opacity-90 shadow-gold"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <Link to="/auth/login">تسجيل الدخول</Link>
+                      </Button>
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="border-accent text-accent hover:bg-accent hover:text-accent-foreground"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <Link to="/auth/register">تسجيل جديد</Link>
+                      </Button>
+                    </div>
+                  )}
+                </div>
+
                 <div className="flex items-center justify-end gap-2 pt-4 border-t border-border">
                   <span className="text-muted-foreground text-sm">اللغة</span>
                   <Button variant="outline" size="sm">
