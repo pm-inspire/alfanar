@@ -12,6 +12,18 @@ import { setDemoUser } from "@/lib/demoAuth";
 
 type Step = 1 | 2 | 3;
 
+type EditableField = "phone" | "otp" | "fullName" | "email" | "password" | "confirmPassword" | "acceptTerms";
+
+type EditableFieldValue = {
+  phone: string;
+  otp: string;
+  fullName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  acceptTerms: boolean;
+}[EditableField];
+
 type State = {
   step: Step;
   phone: string;
@@ -28,7 +40,7 @@ type State = {
 
 type Action =
   | { type: "SET_STEP"; step: Step }
-  | { type: "SET_FIELD"; field: keyof Omit<State, "fieldErrors" | "formMessage" | "isSubmitting">; value: any }
+  | { type: "SET_FIELD"; field: EditableField; value: EditableFieldValue }
   | { type: "SET_ERROR"; field: string; message?: string }
   | { type: "SET_MESSAGE"; message?: State["formMessage"] }
   | { type: "SET_SUBMITTING"; value: boolean }
@@ -58,7 +70,7 @@ function reducer(state: State, action: Action): State {
         [action.field]: action.value,
         fieldErrors: { ...state.fieldErrors, [String(action.field)]: undefined },
         formMessage: null,
-      };
+      } as State;
     case "SET_ERROR":
       return { ...state, fieldErrors: { ...state.fieldErrors, [action.field]: action.message } };
     case "SET_MESSAGE":
@@ -411,7 +423,9 @@ export default function Register() {
               <Checkbox
                 id="acceptTerms"
                 checked={state.acceptTerms}
-                onCheckedChange={(checked) => dispatch({ type: "SET_FIELD", field: "acceptTerms", value: Boolean(checked) })}
+                onCheckedChange={(checked) =>
+                  dispatch({ type: "SET_FIELD", field: "acceptTerms", value: Boolean(checked) })
+                }
               />
               <Label htmlFor="acceptTerms" className="text-sm leading-relaxed text-muted-foreground">
                 بالضغط على تسجيل فإنك توافق على{" "}
