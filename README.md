@@ -60,6 +60,29 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## AI semantic search (Auto parts)
+
+This repo now includes a full AI-powered semantic search implementation:
+
+- **Frontend:** `/search` page with RTL-aware autocomplete, filters, and results.
+- **Admin:** `/admin/ai-search` for toggling AI search and analytics.
+- **Backend:** Laravel implementation under `/backend` (services, routes, migrations).
+
+### Frontend env
+
+Create a `.env` file and point to your backend API:
+
+```bash
+VITE_AI_SEARCH_API_BASE=https://your-domain.com
+VITE_AI_SEARCH_MOCK=true
+```
+
+Set `VITE_AI_SEARCH_MOCK=false` to hit real API responses.
+
+### Backend setup
+
+See `/backend/README.md` for Composer installs, migrations, and embedding jobs.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.

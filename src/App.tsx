@@ -20,6 +20,10 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import Cart from "./pages/shop/Cart";
 import Checkout from "./pages/shop/Checkout";
 import OrderSuccess from "./pages/shop/OrderSuccess";
+import AiSearch from "./pages/shop/AiSearch";
+
+// لوحة الإدارة
+import AiSearchAdmin from "./pages/admin/AiSearchAdmin";
 
 // صفحات الحساب
 import Profile from "./pages/account/Profile";
@@ -53,6 +57,10 @@ const App = () => (
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/order/success/:orderId" element={<OrderSuccess />} />
+            <Route path="/search" element={<AiSearch />} />
+
+            {/* لوحة الإدارة */}
+            <Route path="/admin/ai-search" element={<AiSearchAdmin />} />
 
             {/* صفحات الحساب */}
             <Route path="/account/profile" element={<Profile />} />

@@ -8,6 +8,7 @@ import alfanarLogo from '@/assets/alfanar-logo.svg';
 
 const navLinks = [
   { name: 'الرئيسية', href: '/', isRoute: true },
+  { name: 'البحث الذكي', href: '/search', isRoute: true },
   { name: 'من نحن', href: '/about', isRoute: true },
   { name: 'المنيو', href: '/#menu', isRoute: false },
   { name: 'اتصل بنا', href: '/contact', isRoute: true },
