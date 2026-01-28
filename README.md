@@ -60,6 +60,106 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## AI-Powered Semantic Search (Arabic RTL) – Added in this repo
+
+This repo originally had **no backend** (no Laravel/PHP). To implement secure AI search (so the OpenAI key never goes to the browser), this branch adds a small **Node/Express API** under `server/` and connects the React UI to it via Vite proxy.
+
+### What it does
+
+- **Understands Arabic intent** for auto-parts queries:
+  - Part numbers (e.g. `TY-BRK-7788`)
+  - Vehicle brand/model/year (e.g. "ماء رديتر ميتسوبيشي ازرق 2015")
+  - Descriptive queries + typo tolerance for common brands (e.g. "متسوبيشي" → Mitsubishi)
+- **Hybrid search**:
+  - Keyword + part-number matching (fast + deterministic)
+  - Optional semantic vector similarity (OpenAI embeddings) for better recall
+  - Filter-aware ranking (brand/year/section/in-stock)
+- **Alternatives**: suggests 3–5 similar/compatible parts from same sections.
+- **RTL-ready**: UI is Arabic/RTL with autocomplete + results page.
+
+### Run locally
+
+1) Install dependencies:
+
+```sh
+npm i
+```
+
+2) Create env file:
+
+```sh
+cp .env.example .env
+```
+
+3) Set:
+
+- `OPENAI_API_KEY` (required for semantic search / embeddings)
+- `ADMIN_TOKEN` (required for `/api/admin/*`)
+
+4) Start UI + API together:
+
+```sh
+npm run dev
+```
+
+- UI: `http://localhost:8080/alfanar/`
+- API: `http://localhost:8787/api/health`
+
+### Generate embeddings (demo dataset)
+
+This repo ships with a small demo catalog in `server/data/products.sample.json`.
+
+Generate embeddings for it:
+
+```sh
+npm run ai:embed:sample
+```
+
+### API usage
+
+Search:
+
+```sh
+curl -s http://localhost:8787/api/ai-search \
+  -H 'content-type: application/json' \
+  -d '{"query":"ماء رديتر ميتسوبيشي ازرق 2015","filters":{"in_stock":true}}'
+```
+
+Admin config (requires token):
+
+```sh
+curl -s http://localhost:8787/api/admin/ai-search/config \
+  -H 'x-admin-token: YOUR_TOKEN'
+```
+
+### UI routes added
+
+- `GET /alfanar/search?q=...` – results page
+- `GET /alfanar/admin/ai-search` – admin page (enter `ADMIN_TOKEN`)
+
+### Test queries (Arabic + typos)
+
+Try these in the header search bar:
+
+- "ماء رديتر ميتسوبيشي ازرق"
+- "ماء radiator ميتسوبيشي 2015"
+- "قطع غيار تويوتا 2010 فرامل"
+- "فحمات تويتا كورولا 2010" (typo)
+- "TY-BRK-7788" (part number)
+
+### Production notes (MySQL / real catalog)
+
+This repo includes a MySQL migration template:
+
+- `server/migrations/mysql/001_add_ai_search_columns.sql`
+
+Recommended production approach:
+
+- Store `compatibility` as JSON and embeddings as `embedding_json` (array of floats).
+- Generate embeddings in a **queue worker** (batch + retries + rate limiting).
+- Keep keyword indexes on `brand`, `year`, `section_main`, `section_sub`, and `part_number`.
+- Put the Node API behind your reverse proxy (or re-implement the same engine in Laravel if desired).
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.

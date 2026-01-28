@@ -8,6 +8,12 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    proxy: {
+      "/api": {
+        target: "http://localhost:8787",
+        changeOrigin: true,
+      },
+    },
   },
   base: "/alfanar/", // Add this line
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),

@@ -1,0 +1,105 @@
+[
+  {
+    "id": 1,
+    "name_ar": "ماء رديتر ميتسوبيشي (أزرق) أصلي",
+    "part_number": "MR-00123",
+    "brand": "Mitsubishi",
+    "car_type": "Lancer",
+    "year": 2015,
+    "section_main": "التبريد",
+    "section_sub": "رديتر / ماء",
+    "description": "سائل تبريد رديتر لون أزرق مناسب لميتسوبيشي لانسر 2014-2016",
+    "image": "/placeholder.svg",
+    "price": 85,
+    "stock": 12,
+    "compatibility": {
+      "brands": ["Mitsubishi"],
+      "car_types": ["Lancer"],
+      "years": [2014, 2015, 2016],
+      "notes": "OEM"
+    },
+    "embedding": null
+  },
+  {
+    "id": 2,
+    "name_ar": "فحمات فرامل تويوتا كورولا أمامي",
+    "part_number": "TY-BRK-7788",
+    "brand": "Toyota",
+    "car_type": "Corolla",
+    "year": 2010,
+    "section_main": "الفرامل",
+    "section_sub": "فحمات",
+    "description": "فحمات فرامل أمامية عالية الجودة لتويوتا كورولا 2009-2012",
+    "image": "/placeholder.svg",
+    "price": 145,
+    "stock": 6,
+    "compatibility": {
+      "brands": ["Toyota"],
+      "car_types": ["Corolla"],
+      "years": [2009, 2010, 2011, 2012]
+    },
+    "embedding": null
+  },
+  {
+    "id": 3,
+    "name_ar": "فلتر زيت هيونداي سوناتا",
+    "part_number": "HY-OIL-5500",
+    "brand": "Hyundai",
+    "car_type": "Sonata",
+    "year": 2018,
+    "section_main": "المحرك",
+    "section_sub": "فلاتر",
+    "description": "فلتر زيت مناسب لهيونداي سوناتا 2016-2019 (بديل ممتاز)",
+    "image": "/placeholder.svg",
+    "price": 35,
+    "stock": 20,
+    "compatibility": {
+      "brands": ["Hyundai"],
+      "car_types": ["Sonata"],
+      "years": [2016, 2017, 2018, 2019],
+      "notes": "Aftermarket"
+    },
+    "embedding": null
+  },
+  {
+    "id": 4,
+    "name_ar": "سير مكينة كيا سبورتاج",
+    "part_number": "KIA-BLT-3321",
+    "brand": "Kia",
+    "car_type": "Sportage",
+    "year": 2016,
+    "section_main": "المحرك",
+    "section_sub": "سيور",
+    "description": "سير مكينة (سير ملحقات) مناسب لكيا سبورتاج 2015-2017",
+    "image": "/placeholder.svg",
+    "price": 75,
+    "stock": 3,
+    "compatibility": {
+      "brands": ["Kia"],
+      "car_types": ["Sportage"],
+      "years": [2015, 2016, 2017]
+    },
+    "embedding": null
+  },
+  {
+    "id": 5,
+    "name_ar": "مضخة ماء نيسان تييدا",
+    "part_number": "NS-WP-9911",
+    "brand": "Nissan",
+    "car_type": "Tiida",
+    "year": 2012,
+    "section_main": "التبريد",
+    "section_sub": "مضخة ماء",
+    "description": "مضخة ماء للمحرك مناسبة لنيسان تييدا 2010-2013",
+    "image": "/placeholder.svg",
+    "price": 190,
+    "stock": 0,
+    "compatibility": {
+      "brands": ["Nissan"],
+      "car_types": ["Tiida"],
+      "years": [2010, 2011, 2012, 2013]
+    },
+    "embedding": null
+  }
+]
+

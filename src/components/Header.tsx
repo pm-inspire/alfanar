@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import ProfileDropdown from '@/components/ProfileDropdown';
 import alfanarLogo from '@/assets/alfanar-logo.svg';
+import AiSearchBar from '@/components/search/AiSearchBar';
 
 const navLinks = [
   { name: 'الرئيسية', href: '/', isRoute: true },
@@ -74,7 +75,8 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
+            <AiSearchBar className="max-w-[520px]" />
             {navLinks.map((link) => (
               link.isRoute ? (
                 <Link
@@ -152,6 +154,7 @@ const Header = () => {
               className="md:hidden bg-background border-t border-border overflow-hidden"
             >
               <div className="container-rtl py-6 flex flex-col gap-4">
+                <AiSearchBar className="w-full" />
                 {navLinks.map((link, index) => (
                   link.isRoute ? (
                     <motion.div
